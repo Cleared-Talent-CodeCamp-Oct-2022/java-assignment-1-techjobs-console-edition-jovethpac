@@ -60,46 +60,61 @@ public class JobData {
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
-     *
+     * <p>
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
-     * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param column Column that should be searched.
+     * @param value  Value of the field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
 
         // load data, if not already loaded
         loadData();
-
+//creates a new ArrayList call jobs where we store any jobs that match our search term
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
-
-            if (aValue.contains(value)) {
+            //String aValue = row.get(column);  //original in case I mess up
+            String aValue = row.get(column).toLowerCase();  //makes columns like name, position, location caseinsensitive
+           // if (aValue.contains(value)) { //original in case I mess up
+            if (aValue.contains(value.toLowerCase())) { //makes the specific entries under each column case insensitive
                 jobs.add(row);
             }
         }
 
         return jobs;
+
     }
 
     /**
      * Search all columns for the given term
      *
      * @param value The search term to look for
-     * @return      List of all jobs with at least one field containing the value
+     * @return List of all jobs with at least one field containing the value
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
 
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
-        return null;
+        // TODO - implement this method  //acts like a list of results, my new searches will get fed into jobQuery
+        ArrayList<HashMap<String, String>> jobQuery = new ArrayList<>();
+
+        for (HashMap<String, String> allRows : allJobs) {  //singular: allRows  collection: allJobs
+
+            for (String oneValue : allRows.keySet()) {  //oneValue one singular key within this entire key sets  holds only oneValue  ; don't copy the first for loop, we don't want a HashMap
+                String allResults = allRows.get(oneValue); //allResults stores all of the values (LaunchCode, Developer etc) from the oneValue key
+               // if (allResults.contains(value)) { //modify a little based on the second for loops...chanage based on what I use for second for loop
+                if (allResults.contains(value.toLowerCase())) { //makes all values caseInsensitive
+                    jobQuery.add(allRows);  //adds individual key value pair to this whoel ArrayList of jobQuery
+                    break; //this is correct. stops at the first instance
+                }
+            }
+        }
+        return jobQuery;
     }
 
     /**
