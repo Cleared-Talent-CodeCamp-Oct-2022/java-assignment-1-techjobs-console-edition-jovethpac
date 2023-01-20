@@ -108,8 +108,8 @@ public class JobData {
             for (String oneValue : allRows.keySet()) {  //oneValue one singular key within this entire key sets  holds only oneValue  ; don't copy the first for loop, we don't want a HashMap
                 String allResults = allRows.get(oneValue); //allResults stores all of the values (LaunchCode, Developer etc) from the oneValue key
                // if (allResults.contains(value)) { //modify a little based on the second for loops...chanage based on what I use for second for loop
-                if (allResults.contains(value.toLowerCase())) { //makes all values caseInsensitive
-                    jobQuery.add(allRows);  //adds individual key value pair to this whoel ArrayList of jobQuery
+                if (allResults.toLowerCase().contains(value.toLowerCase())) { //makes all values caseInsensitive   value is the searchTerm
+                    jobQuery.add(allRows);  //adds individual key value pair to this whole ArrayList of jobQuery
                     break; //this is correct. stops at the first instance
                 }
             }
