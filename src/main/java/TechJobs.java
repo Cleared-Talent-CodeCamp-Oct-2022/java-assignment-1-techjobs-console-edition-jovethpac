@@ -10,7 +10,7 @@ public class TechJobs {
 
     static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -61,7 +61,7 @@ public class TechJobs {
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
 
-                if (searchField.equals("all")) {
+                if (searchField.equals("all")) { //means by which we search for jobs
                     printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
@@ -104,7 +104,6 @@ public class TechJobs {
                     return null;
                 }
             }
-
             // Validate user's input
             if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
                 System.out.println("Invalid choice. Try again.");
@@ -112,14 +111,25 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-
-        System.out.println("printJobs is not implemented yet");
+        if (someJobs.size() == 0) {
+            System.out.println("No Results");
+        } else {
+            for (HashMap<String, String> job : someJobs) {
+                System.out.println(); //prints blank space
+                System.out.println("*****"); //prints out asterisk , followed by information, followed by asterisk again
+                for (String key : job.keySet()) { //loops through all the keys and values
+                    System.out.println(key + ": " + job.get(key));
+                }
+                System.out.println("*****"); //prints out asterisk
+            }
+        }
     }
 }
+
